@@ -126,11 +126,11 @@ awaitable<void> Promise<void>::get_return_object() {
 
 }
 
-template <typename T> requires(!std::is_reference<T>::value)
+template<typename T, typename CallbackFunction>
 struct CallbackAwaiter
 {
 public:
-    using CallbackFunction = std::function<void(std::function<void(T)>)>;
+    // using CallbackFunction = std::function<void(std::function<void(T)>)>;
 
     CallbackAwaiter(CallbackFunction callback_function)
         : callback_function_(std::move(callback_function)) {}
@@ -153,12 +153,11 @@ private:
     T result_;
 };
 
-template <>
-struct CallbackAwaiter<void>
+template<typename CallbackFunction>
+struct CallbackAwaiter<void, CallbackFunction>
 {
 public:
-    using CallbackFunction = std::function<void(std::function<void()>)>;
-
+    // using CallbackFunction = std::function<void(std::function<void()>)>;
     CallbackAwaiter(CallbackFunction callback_function)
         : callback_function_(std::move(callback_function)) {}
 
@@ -173,9 +172,16 @@ private:
     CallbackFunction callback_function_;
 };
 
+template<typename T, typename callback>
+CallbackAwaiter<T, callback>
+awaitable_to_callback(callback cb)
+{
+    return CallbackAwaiter<T, callback>{cb};
+}
+
 mcucoro::awaitable<void> coro_delay_ms(int ms)
 {
-    co_return co_await CallbackAwaiter<void>([ms](auto handle)
+    co_return co_await awaitable_to_callback<void>([ms](auto handle)
     {
         mcucoro::delay_ms(ms, handle);
     });
