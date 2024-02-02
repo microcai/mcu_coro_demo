@@ -15,7 +15,7 @@ mcucoro::awaitable<void> led_blinker()
 		.Pin = GPIO_PIN_14,
 		.Mode = GPIO_MODE_OUTPUT_PP,
 		.Pull = GPIO_NOPULL,
-		.Speed = GPIO_SPEED_MEDIUM,
+		.Speed = GPIO_SPEED_FREQ_LOW,
 		.Alternate = 0,
 	};
 	HAL_GPIO_Init(GPIOB, &init);
