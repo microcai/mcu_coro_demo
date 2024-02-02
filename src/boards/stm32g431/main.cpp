@@ -94,6 +94,8 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
+  SysTick_Config(1000);
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
