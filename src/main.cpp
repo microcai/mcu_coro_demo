@@ -21,7 +21,7 @@ mcucoro::awaitable<void> led_blinker()
 
 void setup()
 {
-	mcucoro::post([](){});
+	mcucoro::post([](){led_blinker().get();});
 }
 
 void loop()
