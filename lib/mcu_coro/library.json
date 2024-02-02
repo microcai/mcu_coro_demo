@@ -1,0 +1,10 @@
+{
+    "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
+    "name": "libmcu_coro",
+    "version": "1.0.0",
+    "build": {
+        "srcDir": ".",
+        "flags": ["-std=gnu++23", "-fcoroutines"]
+    }
+  }
+  
