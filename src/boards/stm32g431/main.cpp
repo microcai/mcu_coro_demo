@@ -224,7 +224,7 @@ mcucoro::awaitable<void> led_blinker()
 
 void setup()
 {
-	start_coro(led_blinker());
+	led_blinker().detach();
 }
 
 void loop()
